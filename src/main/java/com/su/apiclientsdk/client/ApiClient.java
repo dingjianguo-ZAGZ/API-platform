@@ -8,8 +8,7 @@ import cn.hutool.http.HttpResponse;
 import cn.hutool.http.HttpUtil;
 import cn.hutool.json.JSONUtil;
 import com.su.apiclientsdk.model.User;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
+
 
 
 import java.util.HashMap;
@@ -18,6 +17,7 @@ import java.util.Map;
 public class ApiClient {
     private String accessKey;
     private String secretKey;
+    private final String GATEWAY_HOST = "http://localhost:8090";
 
     public ApiClient(String accessKey, String secretKey) {
         this.accessKey = accessKey;
@@ -28,14 +28,14 @@ public class ApiClient {
         //可以单独传入http参数，这样参数会自动做URL编码，拼接在URL中
         HashMap<String, Object> paramMap = new HashMap<>();
         paramMap.put("name", name);
-        String result= HttpUtil.get("http://localhost:8123/api/name/", paramMap);
+        String result= HttpUtil.get(GATEWAY_HOST+"/api/name/", paramMap);
         return result;
     }
-    public String getNameByPost(@RequestParam("name") String name) {
+    public String getNameByPost(String name) {
 
         HashMap<String, Object> paramMap = new HashMap<>();
         paramMap.put("name", name);
-        String result= HttpUtil.get("http://localhost:8123/api/name/", paramMap);
+        String result= HttpUtil.get(GATEWAY_HOST+"/api/name/", paramMap);
         return result;
     }
 
@@ -56,9 +56,9 @@ public class ApiClient {
         String sign = md5.digestHex(str);
         return sign;
     }
-    public String getUserName(@RequestBody User user){
+    public String getUserName(User user){
         String json = JSONUtil.toJsonStr(user);
-        HttpResponse response = HttpRequest.post("http://localhost:8123/api/name/user")
+        HttpResponse response = HttpRequest.post(GATEWAY_HOST+"/api/name/user")
                 .addHeaders(getRequestHeader(json))
                 .body(json)
                 .execute();
