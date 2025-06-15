@@ -1,7 +1,7 @@
 package com.su.api_platform.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import generator.domain.UserInterfaceInfo;
+import com.su.api_platform.model.entity.UserInterfaceInfo;
 
 /**
 * @author suhon
@@ -9,5 +9,11 @@ import generator.domain.UserInterfaceInfo;
 * @createDate 2025-06-12 22:26:15
 */
 public interface UserInterfaceInfoService extends IService<UserInterfaceInfo> {
-
+    /**
+     * 校验
+     *
+     * @param userInterfaceInfo
+     * @param add
+     */
+    void validUserInterfaceInfo(UserInterfaceInfo userInterfaceInfo, boolean add);
 }

@@ -1,9 +1,11 @@
 package com.su.api_platform.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import generator.domain.UserInterfaceInfo;
-import generator.mapper.UserInterfaceInfoMapper;
-import generator.service.UserInterfaceInfoService;
+import com.su.api_platform.common.ErrorCode;
+import com.su.api_platform.exception.BusinessException;
+import com.su.api_platform.mapper.UserInterfaceInfoMapper;
+import com.su.api_platform.model.entity.UserInterfaceInfo;
+import com.su.api_platform.service.UserInterfaceInfoService;
 import org.springframework.stereotype.Service;
 
 /**
@@ -12,9 +14,21 @@ import org.springframework.stereotype.Service;
 * @createDate 2025-06-12 22:26:15
 */
 @Service
-public class UserInterfaceInfoServiceImpl extends ServiceImpl<UserInterfaceInfoMapper, UserInterfaceInfo>
-    implements UserInterfaceInfoService{
+public class UserInterfaceInfoServiceImpl extends ServiceImpl<UserInterfaceInfoMapper, UserInterfaceInfo> implements UserInterfaceInfoService {
+    @Override
+    public void validUserInterfaceInfo(UserInterfaceInfo userInterfaceInfo, boolean add) {
+        if (userInterfaceInfo == null) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR);
+        }
 
+        if (userInterfaceInfo.getInterfaceInfoId() < 0 || userInterfaceInfo.getUserId() < 0 ) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR,"接口不存在");
+        }
+        // 有参数则校验
+        if (userInterfaceInfo.getLeftNum() < 0) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR, "剩余次数不能小于0 ");
+        }
+    }
 }
 
 
