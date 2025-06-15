@@ -1,7 +1,8 @@
 package com.su.api_platform.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import generator.domain.UserInterfaceInfo;
+import com.su.api_platform.model.entity.UserInterfaceInfo;
+
 
 /**
 * @author suhon
